@@ -2,9 +2,11 @@ import pygame
 import os
 import sys
 from pygame.locals import *
+from pathlib import Path
 
-image_path = "/Users/wendy/Documents/PycharmProjects/Data/images"
-sound_path = "/Users/wendy/Documents/PycharmProjects/Data/sounds"
+home = str(Path.home())
+image_path = home+"/Documents/PycharmProjects/Data/images"
+sound_path = home+"/Documents/PycharmProjects/Data/sounds"
 
 
 print("Simulator starting")
