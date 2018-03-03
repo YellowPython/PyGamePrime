@@ -72,6 +72,8 @@ class Snake(pygameprime.PyGamePrimeSprite):
             print (e)
             score += 1
 
+    #now we will respond to an update
+
     def update(self):
         if (self.active) :
             pos=pygame.mouse.get_pos()
