@@ -1,37 +1,73 @@
-import pygameprime
-import simulation
-import pygame
-import wrapper_functions
-import random
-from pygame.locals import *
+# Snakeworld is an example game that was written in pygame prime.
+# The comments explain how to build your own games in pygame prime
 
-print("hello")
 
-# definitions imported from simulator
+import pygameprime     #this loads the code that implements the pygame prime functions
+import simulation      #this loads the simulation engine that processes mouse and keyboard events
+import pygame          #this loads the pygame framework that pygame prime uses
+import wrapper_functions        #this loads a set of functions to make using pygameprime easier
+import random                   #this loads a random number generator
+from pygame.locals import *     #this loads a set of pygame variables
+
+
+
+
+print("hello")   #print "hello" to the screen so that you know the code got to this point
+
+# definitions imported from simulator.  These let you call functions from the simulator without having to use simulator.function
 load_image = simulation.load_image
 get_sprite_manager = simulation.get_sprite_manager
 
 #definitions imported from wrapper functions
 
+#The textbox object lets you print formatted text boxes to the game window.  This command creates a textbox object to use
+#in the game
+
 TextBox = wrapper_functions.TextBox
+
+#Colors in pygameprime are represented by RGB values (Red, Green,Blue) - you represent each amount of red, green, or bule with
+#a number between 0 and 255.  You can give these numbers names so that you can easily use them.  For example BLUE = (0,0,255)
+#this translates to 0 red, 0 green, and 255 (maximum) bule.  Green is (0,255,0),  you can make other colors by makeing different
+#combinations of red, green and blue.
 
 BLUE = (0,0,255)
 GREEN = (0,255,0)
 WHITE = (255,255,255)
 WHITE_ALPHA = (255,255,255,255)
 
+#set the initial score to 0.  Every time the snake eats a mouse, the score witll increment
+
 score = 0
+
+#Now, define the Snake object - to do this you implement methods to tell the snake what to do when mouse and keyboard events
+#are sent to it by the simulator.
+
+#All pygameprie sprites "inherit" the pygrameprime "PyGamePrimeSprite" object.  This will allow the Snake object to use all the code
+#from the base sprite pbject implemented in pygame prime.  This inheritance is don by including "pygameprime.PyGamePrimeSprite, in the
+#parenthesis below:
 
 class Snake(pygameprime.PyGamePrimeSprite):
 
-    def __init__(self, image_name):
-        pygameprime.PyGamePrimeSprite.__init__(self,image_name)  # init the sprite superclass
-        self.rect.center = 100, 80
-        self.active = 0
+#Initialize the sprite, you have to do this for every sprite you use
 
-    def did_eat_mouse(self):
-        global score
+    def __init__(self, image_name):  #pass the name of the image you want to use for the sname as "image_name"
+        pygameprime.PyGamePrimeSprite.__init__(self,image_name)  # init the sprite superclass
+        self.rect.center = 100, 80 #define the size of the snake sprite
+        self.active = 0 #in this example, the active variable is used to determine whether to repsond to keyboard and mouse events -
+    # the snake starts out inactive.
+
+    def did_eat_mouse(self):   #check if the snake has eaten a mouse
+        global score           #when the snake eats a mose we will increment the score, so define this here
+
+        #Next we will see if the snake has run into any mice - we use the pygame prime function "collide_list" to check
+        #if the snake has collided with any of the mice that are still uneated.  The mice are kept in the "rodent_group".\
+        #we will show how the rodent_group is defined later in the code.   The mice that are eaten are returned in the variable
+        #"eaten_list".
+
         eaten_list =  pygameprime.collide_list(self,rodent_group,1)
+
+        #loop through all the mice in the "eaten_list" and add one to the score for each mouse.
+
         for e in eaten_list :
             print (e)
             score += 1
