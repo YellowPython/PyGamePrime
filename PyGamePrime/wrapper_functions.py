@@ -15,5 +15,11 @@ class TextBox(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = location
 
+    def keypressed(self,keyinput):
+        return
+
+    def keyreleased(self,keyinput):
+        return
+
     def mouse(self):
         return
