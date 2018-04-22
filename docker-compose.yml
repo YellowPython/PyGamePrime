@@ -1,0 +1,11 @@
+version: '3'
+services:
+  cli:
+    build: .
+    ports:
+    - "80:80"
+    container_name: pygame
+    volumes:
+    - .:/root
+    - ./www:/var/www/vhost/PyGamePrime/www
+    - ~/.bash_history:/root/.bash_history
